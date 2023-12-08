@@ -28,10 +28,10 @@ RUN poetry install --no-root && rm -rf $POETRY_CACHE_DIR
 
 # configura usuário app e arquivos para execução
 FROM dependencies_stage as runtime
-RUN mkdir -p /home/poc_pdtec
+RUN mkdir -p /home/atualiza-parceiro
 RUN addgroup --system app && adduser --system --group app
-RUN chown -R app:app /home/poc_pdtec
+RUN chown -R app:app /home/atualiza-parceiro
 USER app
-WORKDIR /home/poc_pdtec/
-COPY . /home/poc_pdtec/
-ENV PYTHONPATH=${PYTHONPATH}/home/poc_pdtec/src
+WORKDIR /home/atualiza-parceiro/
+COPY . /home/atualiza-parceiro/
+ENV PYTHONPATH=${PYTHONPATH}/home/atualiza-parceiro/src

@@ -6,9 +6,9 @@ services:
     env_file:
       - ./.env
     build: ./
-    image: poc_pdtec_image
+    image: atualiza-parceiro-image
     volumes:
-      - ./:/home/poc_pdtec/
+      - ./:/home/atualiza-parceiro/
     ports:
       - 8000:8000
     command: >
