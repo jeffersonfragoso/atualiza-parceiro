@@ -1,5 +1,4 @@
 from functools import lru_cache
-from typing import Callable
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker
 from sqlalchemy.engine.mock import MockConnection

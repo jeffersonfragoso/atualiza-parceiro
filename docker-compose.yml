@@ -14,7 +14,8 @@ services:
     command: >
       python -m
         uvicorn
-        entrypoints.web.main:app
+        --factory
+        entrypoints.web.main:create_app
         --loop 'uvloop'
         --http 'httptools'
         --log-level debug

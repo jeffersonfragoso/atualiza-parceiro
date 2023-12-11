@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "poc-pdtec-01"
+name = "atualiza-parceiro"
 version = "0.1.0"
 description = ""
 authors = ["Your Name <you@example.com>"]
