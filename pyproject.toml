@@ -23,6 +23,7 @@ passlib = "^1.7.4"
 structlog = "^23.2.0"
 asgi-correlation-id = "^4.2.0"
 fastapi-pagination = "^0.12.13"
+python-jose = "^3.3.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest-cov = "^4.1.0"

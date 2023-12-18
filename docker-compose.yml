@@ -18,7 +18,7 @@ services:
         entrypoints.web.main:create_app
         --loop 'uvloop'
         --http 'httptools'
-        --log-level critical
+        --log-level info
         --reload
         --workers 1
         --host 0.0.0.0

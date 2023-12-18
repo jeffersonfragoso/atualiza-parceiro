@@ -1,8 +1,8 @@
 class CustomException(Exception):
-  message: str
+    message: str
 
-  def __init__(self) -> None:
-    super().__init__(self.message)
+    def __init__(self) -> None:
+        super().__init__(self.message)
 
 
 class BadRequestException(CustomException):
@@ -11,3 +11,7 @@ class BadRequestException(CustomException):
 
 class NotFoundException(CustomException):
     message: str = "Not Found"
+
+
+class AuthenticationException(CustomException):
+    message: str = "Invalid authorization code."

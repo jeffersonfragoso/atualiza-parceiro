@@ -12,6 +12,13 @@ class Settings(BaseSettings):
 
     model_config = SettingsConfigDict(extra="ignore", env_file=".env")
 
+    # auth
+    access_token_expire_minutes: int = 10
+    secret_key: str = "123"
+    algorithm: str = "HS256"
+
+    datetime_format: str = "%m-%Y-%dT%H:%M:%S"
+
 
 @lru_cache
 def get_settings() -> Settings:
