@@ -3,9 +3,13 @@ from __future__ import annotations
 import collections
 from typing import Any, Deque, Dict
 
+import structlog
+
 from .command import Command, CommandExecutor
 from .event import Event, EventExecutor
 from .unit_of_work import CommandUnitOfWork, EventUnitOfWork
+
+log = structlog.stdlib.get_logger()
 
 
 class DomainChannel:
@@ -19,6 +23,7 @@ class DomainChannel:
         self._events_to_dispatch: Deque[Event] = collections.deque()
 
     def dispatch_command(self, command: Command) -> Any:
+        log.info(f"Dispachando commando {command.name}")
         executor = self._commands_catalog.get(command.name)
         with CommandUnitOfWork(command, executor) as uow:
             result = uow.result

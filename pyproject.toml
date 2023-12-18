@@ -12,7 +12,7 @@ httpx = "^0.25.2"
 uvicorn = "^0.24.0.post1"
 uvloop = "^0.19.0"
 anyio = "^3"
-httptools = "^0.6.1" 
+httptools = "^0.6.1"
 ipython = "^8.18.1"
 dependency-injector = "^4.41.0"
 sqlalchemy = "^1"
@@ -20,13 +20,36 @@ pydantic-settings = "^2.1.0"
 psycopg2-binary = "^2.9.9"
 bcrypt = "4.0.1"
 passlib = "^1.7.4"
-
+structlog = "^23.2.0"
+asgi-correlation-id = "^4.2.0"
+fastapi-pagination = "^0.12.13"
 
 [tool.poetry.group.dev.dependencies]
 pytest-cov = "^4.1.0"
 pytest = "^7.4.3"
 pytest-asyncio = "^0.21.1"
+black = "^23.11.0"
+pre-commit = "^3.6.0"
+isort = "^5.13.2"
+flake8 = "^6.1.0"
+bandit = "^1.7.6"
+safety = "^2.3.5"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+
+[tool.black]
+extend-exclude = '''
+/(
+  migrations
+)/
+'''
+
+[tool.isort]
+skip = '''
+/(
+  migrations
+)/
+'''

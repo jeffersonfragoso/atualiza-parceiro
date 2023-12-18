@@ -5,6 +5,9 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     env_name: str = "Local"
+    enable_json_logs: bool = True
+    log_level: str = "INFO"
+
     db_url: str = "sqlite:///:memory:"
 
     model_config = SettingsConfigDict(extra="ignore", env_file=".env")

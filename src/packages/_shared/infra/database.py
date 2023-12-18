@@ -1,7 +1,8 @@
 from functools import lru_cache
+
 from sqlalchemy import create_engine
-from sqlalchemy.orm import Session, sessionmaker
 from sqlalchemy.engine.mock import MockConnection
+from sqlalchemy.orm import Session, sessionmaker
 from sqlalchemy.pool import StaticPool
 
 from src.config import get_settings
@@ -17,15 +18,20 @@ def factory_default_engine() -> MockConnection:
     return engine
 
 
-def factory_default_session(engine = None) -> Session:
-     return sessionmaker(
+def factory_default_session(engine=None) -> Session:
+    return sessionmaker(
         autocommit=False,
         autoflush=False,
         bind=engine,
     )
 
+
 class Database:
-    def __init__(self, factory_engine=factory_default_engine, factory_session=factory_default_session) -> None:
+    def __init__(
+        self,
+        factory_engine=factory_default_engine,
+        factory_session=factory_default_session,
+    ) -> None:
         self._factory_engine = factory_engine
         self._factory_session = factory_session
         self._engine: None

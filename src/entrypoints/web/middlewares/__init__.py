@@ -1,1 +1,7 @@
-from .timer import RequestTimeMiddleware  # noqa: F401
+from .access_logger import RequestAccessLoggerMiddleware
+from .timer import RequestTimeMiddleware
+
+__all__ = [
+    RequestAccessLoggerMiddleware,
+    RequestTimeMiddleware,
+]

@@ -16,7 +16,9 @@ class CommandUnitOfWork(ABC):
         self.result = self._executor.execute(self._command)
         return self
 
-    def __exit__(self, exc_type: Type, exc_val: Exception, exc_tb: TracebackType) -> bool | None:
+    def __exit__(
+        self, exc_type: Type, exc_val: Exception, exc_tb: TracebackType
+    ) -> bool | None:
         if exc_val:
             self._executor.rollback()
         else:
@@ -33,7 +35,9 @@ class EventUnitOfWork(ABC):
         self.result = self._executor.execute(self._event)
         return self
 
-    def __exit__(self, exc_type: Type, exc_val: Exception, exc_tb: TracebackType) -> bool | None:
+    def __exit__(
+        self, exc_type: Type, exc_val: Exception, exc_tb: TracebackType
+    ) -> bool | None:
         if exc_val:
             self._executor.rollback()
         else:

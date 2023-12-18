@@ -1,28 +1,34 @@
-import _seedwork
+import structlog
 
+import _seedwork
 from src.packages.user.domain.commands import CreateUserCommand
 from src.packages.user.domain.entities import User
 from src.packages.user.domain.events import UserCreatedEvent
-from src.packages.user.infra.repository import AbstractUserRepository
 from src.packages.user.infra import Crypt
+from src.packages.user.infra.repository import AbstractUserRepository
 from src.packages.user.use_cases.dto import UserDto
+
+log = structlog.stdlib.get_logger()
 
 
 class CreateUserCommandExecutor(_seedwork.CommandExecutor):
     user_repository: AbstractUserRepository
 
     def execute(self, command: CreateUserCommand) -> UserDto.OutputNewUser:
-
+        log.info("Executando commando")
         user = self.user_repository.get_by_user_name(command.user_name)
 
         if user:
-          raise Exception("Usuário já Existe.")
+            raise Exception("Usuário já Existe.")
         else:
-          new_user = User(user_name=command.user_name, password_hash=Crypt.encrypt_secret(secret=command.password))
+            new_user = User(
+                user_name=command.user_name,
+                password_hash=Crypt.encrypt_secret(secret=command.password),
+            )
 
-          self.user_repository.add(new_user)
-          print(new_user.events)
-          self.set_events(new_user.events)
+            self.user_repository.add(new_user)
+            print(new_user.events)
+            self.set_events(new_user.events)
 
         return UserDto.OutputNewUser(data=new_user.to_dict())
 
