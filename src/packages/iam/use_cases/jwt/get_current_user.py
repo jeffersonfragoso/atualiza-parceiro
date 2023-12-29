@@ -6,6 +6,7 @@ from jose import jwt
 from pydantic import ValidationError
 
 from src import _seedwork
+from src.packages.iam.domain.commands import GetCurrentUserCommand
 from src.packages.user.infra.repository import AbstractUserRepository
 
 log = structlog.stdlib.get_logger()

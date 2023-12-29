@@ -5,7 +5,9 @@ from starlette.requests import Request
 from starlette.responses import JSONResponse
 
 
-def validation_error(_: Request, exception: RequestValidationError) -> JSONResponse:
+def validation_error(
+    _: Request, exception: RequestValidationError
+) -> JSONResponse:
     errors = [
         {
             "localização": pydantic_error["loc"],

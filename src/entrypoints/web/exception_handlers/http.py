@@ -3,13 +3,17 @@ from typing import Callable
 from starlette.requests import Request
 from starlette.responses import JSONResponse
 
-from src._seedwork.exceptions import CustomException
+from src._seedwork.exceptions import CustomHTTPException
 
 
 def http_exception_factory(status_code: int) -> Callable:
-    def http_exception(_: Request, exception: CustomException) -> JSONResponse:
+    def http_exception(
+        request: Request, exception: CustomHTTPException
+    ) -> JSONResponse:
         return JSONResponse(
-            status_code=status_code, content={"message": exception.message}
+            status_code=status_code,
+            content=exception.content,
+            headers=exception.headers,
         )
 
     return http_exception

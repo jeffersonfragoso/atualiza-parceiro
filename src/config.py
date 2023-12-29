@@ -13,7 +13,7 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(extra="ignore", env_file=".env")
 
     # auth
-    access_token_expire_minutes: int = 10
+    access_token_expire_minutes: int = 60
     secret_key: str = "123"
     algorithm: str = "HS256"
 
