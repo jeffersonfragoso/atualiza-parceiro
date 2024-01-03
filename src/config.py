@@ -17,7 +17,7 @@ class Settings(BaseSettings):
     secret_key: str = "123"
     algorithm: str = "HS256"
 
-    datetime_format: str = "%m-%Y-%dT%H:%M:%S"
+    datetime_format: str = "%d-%m-%YT%H:%M:%S"
 
 
 @lru_cache

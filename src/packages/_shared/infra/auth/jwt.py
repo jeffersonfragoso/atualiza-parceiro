@@ -38,9 +38,9 @@ class InputDataToEncode(BaseModel):
     )
 
 
-class OutputAccessToken(BaseModel):
+class OutputSignIn(BaseModel):
     access_token: str
-    expires_at: datetime
+    expires_at: str
     token_type: str = "bearer"
 
 
@@ -66,7 +66,7 @@ class CustomJWTBearer(HTTPBearer):
         return token
 
 
-class JWTManager:
+class Jwt:
     @staticmethod
     def decode_token(token: str) -> dict:
         try:
@@ -77,10 +77,10 @@ class JWTManager:
             )
 
     @staticmethod
-    def create_access_token(data: InputDataToEncode) -> OutputAccessToken:
+    def create_access_token(data: InputDataToEncode) -> OutputSignIn:
         access_token = jwt.encode(data.model_dump(), SECRET_KEY, ALGORITHM)
         expiration_datetime = data.exp.strftime(DATETIME_FORMAT)
-        return OutputAccessToken(
+        return OutputSignIn(
             access_token=access_token, expires_at=expiration_datetime
         )
 
@@ -89,62 +89,3 @@ class JWTManager:
         token=Depends(CustomJWTBearer()),
     ):
         return token
-
-    # @TODO: Transformar em UseCase Signin
-    # @staticmethod
-    # async def sign_in(input_signin, db_session) -> OutputAccessToken:
-    #     usuario_in_db = await crud.usuario.get(
-    #         db_session=db_session, get_by="nm_email", id=input_signin.email
-    #     )
-
-    #     if usuario_in_db is None:
-    #         raise AuthenticationException(
-    #             message=MENSAGEM_CREDENCIAIS_INVALIDAS
-    #         )
-
-    #     if not Crypt.verify_secret(input_signin.senha, usuario_in_db.nm_senha):
-    #         raise AuthenticationException(
-    #             message=MENSAGEM_CREDENCIAIS_INVALIDAS
-    #         )
-
-    #     if input_signin.expires_in:
-    #         expires_at = datetime.utcnow() + timedelta(
-    #             minutes=input_signin.expires_in
-    #         )
-
-    #     data_to_encode = InputDataToEncode(
-    #         sub=usuario_in_db.nm_email, exp=expires_at
-    #     )
-
-    #     token = JWTManager.create_access_token(data_to_encode)
-
-    #     return token
-
-    # @TODO: Transformar em UseCase GetCurrentUser
-    # @staticmethod
-    # async def get_current_user(
-    #     acces_token=Depends(CustomJWTBearer()),
-    #     session: AsyncSession = ActiveSession,
-    # ) -> Usuario:
-    #     try:
-    #         data = JWTController.decode_token(acces_token)
-    #     except (JWTError, ValidationError):
-    #         raise AuthenticationException(
-    #             message=MENSAGEM_TOKEN_INVALIDO_EXPIRADO
-    #         )
-
-    #     user_name = data["sub"]
-
-    #     current_user = await crud.usuario.get(
-    #         db_session=session, get_by="nm_email", id=user_name
-    #     )
-    #     if not current_user:
-    #         raise AuthenticationException(
-    #             message=MENSAGEM_CREDENCIAIS_INVALIDAS
-    #         )
-
-    #     return CurrentUser(
-    #         cd_usuario=current_user.cd_usuario,
-    #         email=current_user.nm_email,
-    #         nome=current_user.nm_usuario,
-    #     )

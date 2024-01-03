@@ -1,8 +1,6 @@
 from passlib.context import CryptContext
 
-
-class WrongPassword(Exception):
-    pass
+from src._seedwork.exceptions import AuthenticationException
 
 
 class Crypt:
@@ -14,6 +12,7 @@ class Crypt:
 
     @classmethod
     def verify_secret(cls, secret: str, encrypted_secret: str) -> bool:
-        correct_password = cls.ctx.verify(secret, encrypted_secret)
-        if not correct_password:
-            raise WrongPassword("Wrong Password")
+        correct_secret = cls.ctx.verify(secret, encrypted_secret)
+        if not correct_secret:
+            raise AuthenticationException("Credenciais inválidas")
+        return correct_secret

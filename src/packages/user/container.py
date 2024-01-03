@@ -4,6 +4,8 @@ from src.packages.user.infra.repository import SqlAlchemyUserRepository
 from src.packages.user.use_cases import (
     CreateUserCommandExecutor,
     UserCreatedEventExecutor,
+    SignInCommandExecutor,
+    GetCurrentUserCommandExecutor,
 )
 
 
@@ -19,8 +21,12 @@ class UserContainer:
             "CreateUserCommand": CreateUserCommandExecutor(
                 user_repository=self.user_repository
             ),
-            # Command2().name : CommandExecutor2(dependencias),
-            # Command3().name : CommandExecutor3(dependencias),
+            "SignInCommand": SignInCommandExecutor(
+                user_repository=self.user_repository
+            ),
+            "GetCurrentUserCommand": GetCurrentUserCommandExecutor(
+                user_repository=self.user_repository
+            ),
         }
 
         # Catalog all events {name: instance}

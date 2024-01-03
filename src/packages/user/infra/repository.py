@@ -1,5 +1,7 @@
-from sqlalchemy.orm import Session
 from abc import abstractmethod
+
+from sqlalchemy.orm import Session
+
 from src._seedwork.repository import AbstractRepository
 from src.packages._shared.infra import orm
 from src.packages.user.domain.entities import User
@@ -28,8 +30,13 @@ class SqlAlchemyUserRepository(AbstractUserRepository):
         self.session.delete(self.to_orm(user))
 
     def get_by_user_name(self, user_name: str) -> User:
-        user = self.session.query(orm.User).filter_by(user_name=user_name).first()
-        return user
+        user = (
+            self.session.query(orm.User).filter_by(user_name=user_name).first()
+        )
+        if user:
+            return self.to_entity(user)
+        else:
+            return None
 
     def commit(self) -> None:
         self.session.commit()
@@ -39,5 +46,12 @@ class SqlAlchemyUserRepository(AbstractUserRepository):
 
     def to_orm(self, entity: User):
         _entity = entity.model_copy(deep=True).to_dict()
-        _entity.pop('events')
+        _entity.pop("events")
         return orm.User(**(_entity))
+
+    def to_entity(self, model: orm.User):
+        return User(
+            user_name=model.user_name,
+            password_hash=model.password_hash,
+            created_at=model.created_at,
+        )
