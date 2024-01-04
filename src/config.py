@@ -10,14 +10,14 @@ class Settings(BaseSettings):
 
     db_url: str = "sqlite:///:memory:"
 
-    model_config = SettingsConfigDict(extra="ignore", env_file=".env")
-
     # auth
     access_token_expire_minutes: int = 60
     secret_key: str = "123"
     algorithm: str = "HS256"
 
     datetime_format: str = "%d-%m-%YT%H:%M:%S"
+
+    model_config = SettingsConfigDict(extra="ignore", env_file=".env")
 
 
 @lru_cache

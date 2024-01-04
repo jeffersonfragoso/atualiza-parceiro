@@ -5,8 +5,6 @@ from asgi_correlation_id import correlation_id
 from structlog.types import Processor
 from traitlets import Any
 
-# from src.packages._shared.infra.context import tracer_id
-
 
 def add_correlation(
     logger: logging.Logger, method_name: str, event_dict: dict[str, Any]

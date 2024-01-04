@@ -23,3 +23,17 @@ services:
         --workers 1
         --host 0.0.0.0
         --port 8000
+    depends_on:
+      - db
+  db:
+    image: postgres:alpine3.14
+    ports:
+      - 54321:5432
+    env_file:
+      - ./.env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d/
+
+volumes:
+  postgres_data:
